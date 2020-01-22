@@ -1,9 +1,9 @@
-SELECT state.alarm_id, 
-	alarm.name, 
-    state.entity_id, 
-    state.alarm_acknowledged,
-    state.ack_user, 
-    state.ack_time 
-FROM vpx_alarm_state AS state 
-INNER JOIN vpx_alarm as alarm ON (state.alarm_id = alarm.alarm_id) 
-WHERE state.alarm_acknowledged=1;
+SELECT
+    vpx_alarm.name,
+    vpx_entity.name, 
+    vpx_alarm_state.ack_user, 
+    vpx_alarm_state.ack_time 
+FROM vpx_alarm_state
+    INNER JOIN vpx_alarm ON (vpx_alarm_state.alarm_id = vpx_alarm.alarm_id)
+    INNER JOIN vpx_entity ON (vpx_alarm_state.entity_id = vpx_entity.id)
+WHERE vpx_alarm_state.alarm_acknowledged=1;
